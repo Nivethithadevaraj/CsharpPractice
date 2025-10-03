@@ -1,17 +1,38 @@
 using System;
-abstract class Account{
-    private static double balance = 0;
-    public static void deposit(double amount){
-        balance += amount;
+class BankAccount{
+    private double balance;
+    public BankAccount(double initialBalance){
+        balance = initialBalance;
     }
-    public static double getBalance(){
-        return balance;
-    }}
-public class Program
-{
-    static void Main()
+    public void Deposit(double amount)
     {
-        Account.deposit(1000);
-        Console.WriteLine(Account.getBalance());
+        if (amount > 0)
+        {
+            balance += amount;
+            Console.WriteLine($"Deposited {amount}, New Balance: {balance}");
+        }
+        else
+        {
+            Console.WriteLine("Deposit amount must be positive.");
+        }
+    }
+    public void Withdraw(double amount){
+        if (amount <= balance){
+            balance -= amount;
+            Console.WriteLine($"Withdrawn {amount}, Remaining Balance: {balance}");
+        }
+        else{
+            Console.WriteLine("Insufficient balance.");
+        }
+    }
+    public double GetBalance(){
+        return balance;
     }
 }
+public class Program{
+    static void Main(){
+        BankAccount account = new BankAccount(1000);
+        account.Deposit(500);
+        account.Withdraw(200);     
+        Console.WriteLine($"Final Balance: {account.GetBalance()}");
+    }}
